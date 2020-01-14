@@ -1,0 +1,14 @@
+#retrieves the root domain name
+$rootDN = (get-ADdomain) DistinguishedName
+
+#creates a new ad group in the parent domain named sales users and adds members
+New-ADGroup -Path "ou=sales, $rootDN" -name "Sales Users" -GroupScope Global -GroupCategory Security
+Add-ADGroupMember -Identity "Sales Uers" -Member (get-aduser Tbrady)
+Remove-ADGroupMember -Identity "Sales Users" -Members (get-aduser Tbrady)
+Get-ADGroup "Sales Users"
+
+Get-ADGroup "sales Users"
+Add-ADGroupMember -Identity "sales users" -Member (get-aduser -Filter 'department -eq "hr')
+Get-ADGroupMember "sales users"
+Get-ADGroupMember "sales users" | ogv
+Remove-ADGroup "sales users"
