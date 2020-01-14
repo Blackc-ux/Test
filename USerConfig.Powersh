@@ -1,0 +1,23 @@
+#prompts for username and required parameters to create a new user
+
+New-ADUser
+
+#creates a username Lisa
+New-ADUser Lisa -Office Huntsville -Company Atlantis -mobilephone "(123)987-1234"
+Get-ADUser Lisa
+Get-ADUser Lisa -Property *
+
+#create a new user account, then modifies the description of the user
+New-ADUser "Joe Blow"
+Set-ADObject -Description "Graphic Designer"
+
+#New Accounts are disabled by default. The enable below will FAIL
+Enable-ADAccount Lisa
+
+#use a variable to be prompted for the password, then set the password for the user
+$pw = Read-Host "what is the password" -ASSecureString
+Set-ADAAccountpassword Lisa -NewPassword $pw
+Enable-ADAccount Lisa
+
+New ADUser Joe -Enable $true -ADAAccountpassword $(convertoo-securestring, "P@zzWord" -ASPlainText -Force)
+Get-ADUser Joe
