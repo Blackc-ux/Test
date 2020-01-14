@@ -1,0 +1,12 @@
+#delete user account from CSV file
+Import-CSV .\Users.CSV | Foreach-Object {Remove-ADuser -Identity $_.MarioAccountName -Confirm:$False }
+
+#does not remove object. Informs what the command will do if executed
+Get-ADUser -filter 'department -eq "hr"'| Remove-ADUser -whatif
+
+#removes user account based on department
+Get-ADUser -filter 'department -eq "hr"'|Remove-ADUser
+Get-ADUser -filter 'department -eq "hr"'|Remove-ADUser -Confirm:$False
+
+#Import users from CSV file
+Import-CSV ".\User.csv" New-ADUser -AccountPassword $(convertto-securesting "p@55word" -AsPlainTest -Force) -ChangePasswordAtLogon $true -Enabled $true
